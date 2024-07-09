@@ -99,12 +99,18 @@ const Employee = () => {
               display: "flex",
               justifyContent: "space-between",
               alignItems: "center",
-              marginBottom: "30px",
             }}
           >
             <div>
-              <h1>Employee Table</h1>
-              <p>Employees are available.</p>
+              <h1
+                style={{ margin: "0px", fontSize: "22px", fontWeight: "bold" }}
+              >
+                Employee Table
+              </h1>
+              <p>
+                Employee are{" "}
+                {employees.length > 0 ? "available." : "not available."}
+              </p>
             </div>
             <div>
               <div style={{ marginRight: "10px" }}>
@@ -123,12 +129,12 @@ const Employee = () => {
               </div>
             </div>
           </div>
-          <div style={{ marginTop: "30px", overflowX: "auto" }}>
+          <div style={{ marginTop: "10px", overflowX: "auto" }}>
             <Table dataSource={newEmployees}>
               <Column
-                title="Image"
-                dataIndex="image"
-                key="image"
+                title="Avatar"
+                dataIndex="avatar"
+                key="avatar"
                 render={(_, record) => (
                   <img
                     src={`http://localhost:5000${record.avatar}`}

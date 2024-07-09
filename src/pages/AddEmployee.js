@@ -46,17 +46,24 @@ const AddEmployee = () => {
       .then((res) => res.json())
       .then((data) => {
         console.log(data);
+
         if (data.message === "Employee created successfully!") {
           // Reset form
           setAvatarFileList([]);
-          message.success("upload successfully.");
+          message.success("Upload Successfully.");
           navigate.push("/employee");
+        } else if (data.message === "Invalid email address") {
+          message.error("Invalid Email Address");
+        } else if (data.message === "Office Id already exists") {
+          message.error("Office Id Already Exists");
+        } else if (data.message === "Email already exists") {
+          message.error("Email Already Exists");
         } else {
-          message.error("upload failed.");
+          message.error("Upload Failed");
         }
       })
       .catch(() => {
-        message.error("upload failed.");
+        message.error("Upload Failed.");
       })
       .finally(() => {
         setUploading(false);
@@ -80,6 +87,12 @@ const AddEmployee = () => {
   return (
     <Row gutter={[24, 0]}>
       <Col xs={24} md={12} lg={12}>
+        <div style={{ marginBottom: "20px" }}>
+          <h1 style={{ margin: "0px", fontSize: "22px", fontWeight: "bold" }}>
+            Add Employee Details
+          </h1>
+          <p>You can add employee details from here.</p>
+        </div>
         <Form onFinish={handleUpload} layout="vertical">
           <Row gutter={[24, 0]}>
             <Col xs={24} md={12} lg={12}>

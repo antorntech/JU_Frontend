@@ -43,57 +43,61 @@ const EditEmployeeDetails = () => {
       });
   }, [id, form]);
 
-  const handleUpload = async (values) => {
-    try {
-      setUploading(true);
-      const formData = new FormData();
+  const handleUpload = (values) => {
+    const formData = new FormData();
 
-      // Append form values to FormData
-      for (const key in values) {
-        if (values.hasOwnProperty(key) && key !== "avatar") {
-          formData.append(key, values[key]);
+    // Append user photo file to formData
+    avatarFileList.forEach((file) => {
+      formData.append("avatar", file);
+    });
+
+    // Append other form data
+    formData.append("officeId", values.officeId);
+    formData.append("officeEmail", values.officeEmail);
+    formData.append("firstName", values.firstName);
+    formData.append("lastName", values.lastName);
+    formData.append("designation", values.designation);
+    formData.append("primaryMobNumber", values.primaryMobNumber);
+    formData.append("secondaryMobNumber", values.secondaryMobNumber);
+    setUploading(true);
+
+    // You can use any AJAX library you like
+    fetch(`http://localhost:5000/api/v1/employee/${id}`, {
+      method: "PUT",
+      headers: {
+        Authorization: `Bearer ${JSON.parse(localStorage.getItem("token"))}`,
+      },
+      body: formData,
+    })
+      .then((res) => {
+        if (!res.ok) {
+          throw new Error("Failed to update Employee data");
         }
-      }
-
-      // Append file to FormData
-      if (avatarFileList.length > 0) {
-        formData.append("avatar", avatarFileList[0].originFileObj);
-      }
-
-      const response = await fetch(
-        `http://localhost:5000/api/v1/employee/${id}`,
-        {
-          method: "PUT",
-          headers: {
-            Authorization: `Bearer ${JSON.parse(
-              localStorage.getItem("token")
-            )}`,
-          },
-          body: formData,
-        }
-      );
-
-      if (!response.ok) {
-        throw new Error("Failed to update employee data");
-      }
-
-      message.success("Employee data updated successfully.");
-      navigate.push("/employee");
-    } catch (error) {
-      console.error("Error updating employee data:", error);
-      message.error("Failed to update employee data");
-    } finally {
-      setUploading(false);
-    }
+        return res.json();
+      })
+      .then(() => {
+        message.success("Employee data updated successfully.");
+        navigate.push("/employee");
+      })
+      .catch((error) => {
+        console.error(error);
+        message.error("Failed to update Employee data");
+      })
+      .finally(() => {
+        setUploading(false);
+      });
   };
 
   const avatarFileProps = {
-    onRemove: () => {
-      setAvatarFileList([]);
+    onRemove: (file) => {
+      const index = avatarFileList.indexOf(file);
+      const newFileList = avatarFileList.slice();
+      newFileList.splice(index, 1);
+      setAvatarFileList(newFileList);
     },
     beforeUpload: (file) => {
-      setAvatarFileList([file]);
-      return false;
+      setAvatarFileList([...avatarFileList, file]);
+      return false; // Prevent default upload behavior
     },
     fileList: avatarFileList,
   };
@@ -101,6 +105,12 @@ const EditEmployeeDetails = () => {
   return (
     <Row gutter={[24, 0]}>
       <Col xs={24} md={12} lg={12}>
+        <div style={{ marginBottom: "20px" }}>
+          <h1 style={{ margin: "0px", fontSize: "22px", fontWeight: "bold" }}>
+            Edit Employee Details
+          </h1>
+          <p>You can edit employee details from here.</p>
+        </div>
         <Form
           form={form}
           onFinish={handleUpload}
