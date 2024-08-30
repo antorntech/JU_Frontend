@@ -11,7 +11,11 @@ function Footer() {
           <div className="copyright">
             © {date}, made with
             {<HeartFilled />} by
-            <a href="#pablo" className="font-weight-bold" target="_blank">
+            <a
+              href="https://octetit.com"
+              className="font-weight-bold"
+              target="_blank"
+            >
               OCTETIT
             </a>
             for a better web.

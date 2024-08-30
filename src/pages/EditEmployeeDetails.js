@@ -57,6 +57,7 @@ const EditEmployeeDetails = () => {
     formData.append("firstName", values.firstName);
     formData.append("lastName", values.lastName);
     formData.append("designation", values.designation);
+    formData.append("address", values.address);
     formData.append("primaryMobNumber", values.primaryMobNumber);
     formData.append("secondaryMobNumber", values.secondaryMobNumber);
     setUploading(true);
@@ -158,11 +159,20 @@ const EditEmployeeDetails = () => {
             </Col>
           </Row>
           <Row gutter={[24, 0]}>
-            <Col xs={24} md={24} lg={24}>
+            <Col xs={24} md={12} lg={12}>
               <Form.Item
                 name="designation"
                 label="Designation"
                 placeholder="Enter designation"
+              >
+                <Input />
+              </Form.Item>
+            </Col>
+            <Col xs={24} md={12} lg={12}>
+              <Form.Item
+                name="address"
+                label="Address"
+                placeholder="Enter address"
               >
                 <Input />
               </Form.Item>

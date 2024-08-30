@@ -10,6 +10,7 @@ import "react-toastify/dist/ReactToastify.css";
 import EditEmployeeDetails from "./pages/EditEmployeeDetails";
 import AddEmployee from "./pages/AddEmployee";
 import Employee from "./pages/Employee";
+import Profile from "./pages/Profile";
 
 function App() {
   const user = JSON.parse(localStorage.getItem("token"));
@@ -26,6 +27,7 @@ function App() {
               path="/edit_employee/:id"
               component={EditEmployeeDetails}
             />
+            <Route exact path="/profile/:id" component={Profile} />
             <Redirect from="*" to="/dashboard" />
           </Main>
         </Switch>
