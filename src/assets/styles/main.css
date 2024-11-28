@@ -386,7 +386,7 @@ body {
 }
 .layout-dashboard .ant-layout {
   background-image: url("https://img.freepik.com/free-vector/white-abstract-background_23-2148810112.jpg?w=740&t=st=1708597149~exp=1708597749~hmac=76429abfef1983c12a1e091f21bd9c67d2c48e360e18816d300285192653fbfa");
-  background-position: center;
+  background-position: 100% 100%;
   background-repeat: no-repeat;
   background-size: cover;
   position: relative;
@@ -2135,6 +2135,9 @@ body {
 }
 .layout-default .ant-layout-content {
   padding-top: 40px;
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: cover;
   background-image: url("https://images.unsplash.com/photo-1496171367470-9ed9a91ea931?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D");
 }
 .font-regular {
