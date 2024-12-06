@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Form, Input, Button, message, Row, Col } from "antd";
+import { Form, Input, Button, message, Row, Col, Select } from "antd";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 
 const AddAccount = () => {
@@ -73,6 +73,12 @@ const AddAccount = () => {
           >
             <Input />
           </Form.Item>
+          <Form.Item name="role" label="Role">
+            <Select defaultValue="admin">
+              <Select.Option value="admin">Admin</Select.Option>
+              <Select.Option value="employee">Employee</Select.Option>
+            </Select>
+          </Form.Item>
           <Form.Item
             name="password"
             label="Password"
@@ -84,7 +90,7 @@ const AddAccount = () => {
               },
             ]}
           >
-            <Input.Password />
+            <Input />
           </Form.Item>
           <Button
             className="primary-btn"

@@ -422,8 +422,8 @@ body {
 }
 .layout-dashboard .header-control {
   display: flex;
-  flex-direction: row-reverse;
   align-items: center;
+  justify-content: space-between;
   margin-top: 10px;
 }
 

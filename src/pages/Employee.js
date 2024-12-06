@@ -10,6 +10,7 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
 import Loader from "../components/shared/loader/Loader";
+import useDecodeToken from "../components/hooks/useDecodeToken";
 
 const onChange = (value) => {
   console.log(`selected ${value}`);
@@ -22,6 +23,9 @@ const { confirm } = Modal;
 const { Column } = Table;
 
 const Employee = () => {
+  const token = JSON.parse(localStorage.getItem("token"));
+
+  const { decodedToken, error } = useDecodeToken(token);
   // make & model list get from here
   const [count, setCount] = useState(false);
   const [employees, setEmployees] = useState([]);
@@ -112,18 +116,14 @@ const Employee = () => {
             </div>
             <div>
               <div style={{ marginRight: "10px" }}>
-                <Button
-                  type="primary"
-                  className="primary-btn"
-                  // onClick={() => {
-                  //   setOpen(true);
-                  // }}
-                >
-                  <Link to="/add_employee">
-                    <PlusOutlined style={{ marginRight: "5px" }} />
-                    Add Employee
-                  </Link>
-                </Button>
+                {decodedToken?.role === "admin" && (
+                  <Button type="primary" className="primary-btn">
+                    <Link to="/add_employee">
+                      <PlusOutlined style={{ marginRight: "5px" }} />
+                      Add Employee
+                    </Link>
+                  </Button>
+                )}
               </div>
             </div>
           </div>
@@ -163,11 +163,13 @@ const Employee = () => {
                 width="100px"
                 render={(_, record) => (
                   <Space size="middle">
-                    <Link to={`/edit_employee/${record._id}`}>
-                      <Button type="primary">
-                        <EditOutlined />
-                      </Button>
-                    </Link>
+                    {decodedToken?.role === "admin" && (
+                      <Link to={`/edit_employee/${record._id}`}>
+                        <Button type="primary">
+                          <EditOutlined />
+                        </Button>
+                      </Link>
+                    )}
                     <Link to={`/profile/${record._id}`}>
                       <Button
                         type="primary"
@@ -179,12 +181,18 @@ const Employee = () => {
                         <EyeFilled />
                       </Button>
                     </Link>
-                    <Button
-                      type="danger"
-                      onClick={() => showConfirm(record._id)}
-                    >
-                      <DeleteOutlined />
-                    </Button>
+                    {decodedToken?.role === "admin" && (
+                      <Button
+                        type="primary"
+                        style={{
+                          backgroundColor: "red",
+                          border: "1px solid red",
+                        }}
+                        onClick={() => showConfirm(record._id)}
+                      >
+                        <DeleteOutlined />
+                      </Button>
+                    )}
                   </Space>
                 )}
               />

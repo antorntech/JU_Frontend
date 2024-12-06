@@ -131,6 +131,7 @@ const Accounts = () => {
             <Table dataSource={newAccounts}>
               <Column title="Username" dataIndex="userName" key="userName" />
               <Column title="Email" dataIndex="email" key="email" />
+              <Column title="Role" dataIndex="role" key="role" />
               <Column
                 title="Action"
                 key="action"

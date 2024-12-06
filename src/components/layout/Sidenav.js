@@ -1,10 +1,15 @@
 import { Button, Menu } from "antd";
 import { NavLink, useLocation } from "react-router-dom";
 import logo from "../../assets/images/logo.png";
+import useDecodeToken from "../hooks/useDecodeToken";
 
 function Sidenav({ color }) {
   const { pathname } = useLocation();
   const page = pathname.replace("/", "");
+
+  const token = JSON.parse(localStorage.getItem("token"));
+
+  const { decodedToken, error } = useDecodeToken(token);
 
   const dashboard = [
     <svg
@@ -92,19 +97,21 @@ function Sidenav({ color }) {
             <span className="label">All Employee</span>
           </NavLink>
         </Menu.Item>
-        <Menu.Item key="2">
-          <NavLink to="/accounts">
-            <span
-              className="icon"
-              style={{
-                background: page === "accounts" ? color : "",
-              }}
-            >
-              {profile}
-            </span>
-            <span className="label">Accounts</span>
-          </NavLink>
-        </Menu.Item>
+        {decodedToken?.role === "admin" && (
+          <Menu.Item key="2">
+            <NavLink to="/accounts">
+              <span
+                className="icon"
+                style={{
+                  background: page === "accounts" ? color : "",
+                }}
+              >
+                {profile}
+              </span>
+              <span className="label">Accounts</span>
+            </NavLink>
+          </Menu.Item>
+        )}
       </Menu>
     </>
   );

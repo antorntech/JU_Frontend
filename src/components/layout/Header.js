@@ -1,17 +1,8 @@
 import { useState, useEffect } from "react";
-import {
-  Row,
-  Col,
-  Button,
-  List,
-  Avatar,
-  Input,
-  Drawer,
-  Typography,
-  Form,
-} from "antd";
+import { Row, Col, Button, Avatar, Typography, Form } from "antd";
 
 import { toast } from "react-toastify";
+import useDecodeToken from "../hooks/useDecodeToken";
 
 const logsetting = [
   <svg
@@ -43,65 +34,55 @@ const toggler = [
   </svg>,
 ];
 
-function Header({
-  placement,
-  name,
-  subName,
-  onPress,
-  handleSidenavColor,
-  handleSidenavType,
-  handleFixedNavbar,
-}) {
-  const { Title, Text } = Typography;
-
-  const [visible, setVisible] = useState(false);
-
+function Header({ onPress }) {
   useEffect(() => window.scrollTo(0, 0));
-
-  const showDrawer = () => setVisible(true);
-  const hideDrawer = () => setVisible(false);
 
   const handleLogout = () => {
     localStorage.removeItem("token");
     window.location.reload();
   };
 
-  const [count, setCount] = useState(0);
-  const [admin, setAdmin] = useState({});
+  const token = JSON.parse(localStorage.getItem("token"));
 
-  useEffect(() => {
-    const token = JSON.parse(localStorage.getItem("token"));
-    fetch("http://localhost:5000/api/v1/admin", {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        setAdmin(data.admins._id);
-      });
-  }, [count]);
+  const { decodedToken, error } = useDecodeToken(token);
 
   return (
     <>
       <Row gutter={[24, 0]}>
-        <Col span={24} md={24} className="header-control">
-          <Button
-            onClick={handleLogout}
-            type="primary"
-            style={{ background: "#F7941D", border: "none", color: "white" }}
-          >
-            Logout
-          </Button>
-          <Button
-            type="link"
-            className="sidebar-toggler"
-            onClick={() => onPress()}
-          >
-            {toggler}
-          </Button>
+        <Col span={24} md={24}>
+          <div className="header-control">
+            <div>
+              <Button
+                type="link"
+                className="sidebar-toggler"
+                onClick={() => onPress()}
+              >
+                {toggler}
+              </Button>
+            </div>
+            <div style={{ display: "flex", alignItems: "center" }}>
+              <h1
+                style={{
+                  textTransform: "capitalize",
+                  marginTop: "8px",
+                  marginRight: "10px",
+                }}
+              >
+                {decodedToken?.role}
+              </h1>
+              <Button
+                onClick={handleLogout}
+                type="primary"
+                style={{
+                  background: "#F7941D",
+                  border: "none",
+                  color: "white",
+                }}
+              >
+                Logout
+              </Button>
+            </div>
+          </div>
         </Col>
       </Row>
     </>
