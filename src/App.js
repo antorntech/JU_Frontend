@@ -11,6 +11,8 @@ import EditEmployeeDetails from "./pages/EditEmployeeDetails";
 import AddEmployee from "./pages/AddEmployee";
 import Employee from "./pages/Employee";
 import Profile from "./pages/Profile";
+import Accounts from "./pages/Accounts";
+import AddAccount from "./pages/AddAccount";
 
 function App() {
   const user = JSON.parse(localStorage.getItem("token"));
@@ -28,6 +30,8 @@ function App() {
               component={EditEmployeeDetails}
             />
             <Route exact path="/profile/:id" component={Profile} />
+            <Route exact path="/accounts" component={Accounts} />
+            <Route exact path="/add_account" component={AddAccount} />
             <Redirect from="*" to="/dashboard" />
           </Main>
         </Switch>
