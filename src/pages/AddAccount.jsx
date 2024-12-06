@@ -40,7 +40,7 @@ const AddAccount = () => {
 
   return (
     <Row gutter={[24, 0]}>
-      <Col xs={24} md={12} lg={12}>
+      <Col xs={24} md={6} lg={6}>
         <div style={{ marginBottom: "20px" }}>
           <h1 style={{ margin: "0px", fontSize: "22px", fontWeight: "bold" }}>
             Add Account Details
