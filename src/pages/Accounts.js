@@ -161,15 +161,15 @@ const Accounts = () => {
             }}
           >
             <div>
-              <h1>Employee Table</h1>
-              <p>Employee not available.</p>
+              <h1>Account Table</h1>
+              <p>Account not available.</p>
             </div>
             <div>
               <div style={{ marginRight: "10px" }}>
                 <Button type="primary" className="primary-btn">
                   <Link to="/add_account">
                     <PlusOutlined style={{ marginRight: "5px" }} />
-                    Add Employee
+                    Add Account
                   </Link>
                 </Button>
               </div>
